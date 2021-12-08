@@ -1,25 +1,35 @@
 import { useFocusEffect } from "@react-navigation/core";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Alert, useWindowDimensions } from 'react-native';
 import { View, Text, Pressable } from "react-native";
 import { Auth } from "../firebaseConfig";
 
 const UserPage = ({ navigation }) => {
-    const [logged, setLogged] = useState(false)
+    const [logged, setLogged] = useState()
     const { width } = useWindowDimensions()
     const auth = Auth.getAuth()
-    useFocusEffect(
-        useCallback(() => {
-            Auth.onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    console.log("왜 여러번 출력하지? 여기 다시 생각해보기")
-                    setLogged(true)
-                }
-            })
-        }, [])
-    )
+    useEffect(() => {
+        Auth.onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log("왜 여러번 출력하지? 여기 다시 생각해보기")
+                setLogged(true)
+            } else {
+                setLogged(false)
+            }
+        })
+    }, [])
+    // useFocusEffect(
+    //     useCallback(() => {
+    //         Auth.onAuthStateChanged(auth, (user) => {
+    //             if (user) {
+    //                 console.log("왜 여러번 출력하지? 여기 다시 생각해보기")
+    //                 setLogged(true)
+    //             }
+    //         })
+    //     }, [])
+    // )
 
-    const LogOut_Alert = () => {
+    const LogOut_Alert = useCallback(() => {
         Alert.alert(
             "Sign-Out",
             "로그아웃 하시겠습니까?",
@@ -39,7 +49,7 @@ const UserPage = ({ navigation }) => {
             ],
             { cancelable: false }
         )
-    }
+    }, [])
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>

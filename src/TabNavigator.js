@@ -1,33 +1,12 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { FontAwesome } from '@expo/vector-icons';
 import Test from './NavPages/Test';
-import { Home, Item, ItemDetail, Login, UserPage } from "./StackScreens";
+import { Home, Item, ItemDetail, Login, UserPage, OrderPage } from "./StackScreens";
 import { useTheme } from '@react-navigation/native'
 
 const Stack = createStackNavigator()
-
-const HomeItemStack = () => {
-    return (
-        <Stack.Navigator screenOptions={{
-            headerShown: false,
-        }}>
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Item" component={Item} />
-            <Stack.Screen name="Detail" component={ItemDetail} />
-        </Stack.Navigator>
-    )
-}
-
-const UserStack = () => {
-    return (
-        <Stack.Navigator>
-            <Stack.Screen name="UserPage" component={UserPage} />
-            <Stack.Screen name="login" component={Login} />
-        </Stack.Navigator >
-    )
-}
 
 const TabNavigator = () => {
     const Tab = createBottomTabNavigator()
@@ -38,6 +17,26 @@ const TabNavigator = () => {
                 name={name}
                 size={focused ? 30 : 24}
                 color={focused ? colors.focused_color : colors.unfocused_color} />
+        )
+    }
+    const HomeItemStack = () => {
+        return (
+            <Stack.Navigator screenOptions={{
+                headerShown: false,
+            }}>
+                <Stack.Screen name="Home" component={Home} />
+                <Stack.Screen name="Item" component={Item} />
+                <Stack.Screen name="Detail" component={ItemDetail} />
+                <Stack.Screen name="OrderPage" component={OrderPage} />
+            </Stack.Navigator>
+        )
+    }
+    const UserStack = () => {
+        return (
+            <Stack.Navigator>
+                <Stack.Screen name="UserPage" component={UserPage} />
+                <Stack.Screen name="login" component={Login} />
+            </Stack.Navigator >
         )
     }
     return (

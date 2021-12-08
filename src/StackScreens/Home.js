@@ -7,7 +7,7 @@ import Item from './Item';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useTheme } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
-import { Avatar, Badge, } from "react-native-elements";
+import OrderBtn from '../conponents/OrderBtn';
 
 
 const Home = ({ navigation, route }) => {
@@ -16,7 +16,6 @@ const Home = ({ navigation, route }) => {
     const { width } = useWindowDimensions()
     const tabBarHeight = useBottomTabBarHeight()
     const { colors } = useTheme()
-
     useEffect(() => {
         setLists(New_arr(ApiTest))
     }, [])
@@ -30,7 +29,9 @@ const Home = ({ navigation, route }) => {
     const pagemove = (info) => {
         navigation.navigate("Detail", { info })
     }
-
+    const OrderPage_move = () => {
+        navigation.navigate("OrderPage", { basket })
+    }
     return (
         <SafeAreaView style={{
             flex: 1, alignItems: 'center',
@@ -47,23 +48,7 @@ const Home = ({ navigation, route }) => {
                     overScrollMode="never"
                     style={{ borderRadius: 10 }}
                 />
-                <View style={{ position: 'absolute', justifyContent: 'flex-end', width: '100%', height: '100%', alignItems: 'flex-end', paddingRight: 5, paddingBottom: 5 }}>
-                    <View>
-                        <Avatar
-                            size="medium"
-                            rounded
-                            overlayContainerStyle={{ backgroundColor: '#bfd8d5' }}
-                            activeOpacity={0.7}
-                            onPress={() => console.log("주문하기")}
-                            icon={{ name: 'shopping-basket', type: 'font-awesome' }}
-                        />
-                        {parseInt(basket.length) > 0 ? <Badge
-                            value={basket.length}
-                            status="primary"
-                            containerStyle={{ position: 'absolute', top: -1, right: 6, }}
-                        /> : <></>}
-                    </View>
-                </View>
+                <OrderBtn OrderPage_move={() => OrderPage_move()} cnt={basket.length} />
             </View>
         </SafeAreaView >
     )

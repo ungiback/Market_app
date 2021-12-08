@@ -9,22 +9,22 @@ const Container = styled.View`
     flex:1;
     justify-content:center;
     align-items:center;
-`
-const auth = Auth.getAuth()
-const SignIn = async (id, password, navigation) => {
-    try {
-        const confirm = await Auth.signInWithEmailAndPassword(auth, id, password)
-        if (confirm) {
-            navigation.pop()
-        }
-    } catch (error) {
-        console.log(error.code)
-    }
-
-}
+`;
 const Login = ({ navigation }) => {
     const [id, setId] = useState("")
     const [password, setPassword] = useState("")
+    const auth = Auth.getAuth()
+    const SignIn = async (id, password, navigation) => {
+        try {
+            const confirm = await Auth.signInWithEmailAndPassword(auth, id, password)
+            if (confirm) {
+                navigation.pop()
+            }
+        } catch (error) {
+            console.log(error.code)
+        }
+
+    }
     return (
         <Container>
             <Rb_Input

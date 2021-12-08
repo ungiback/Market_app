@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useReducer, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { View, Text, Pressable, useWindowDimensions, Alert } from "react-native";
 import OrderListItem from "../conponents/OrderListItem";
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -7,28 +7,6 @@ import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useTheme, useFocusEffect } from '@react-navigation/native'
 import { Auth } from "../firebaseConfig";
 
-const api = [
-    {
-        name: "딸기",
-        count: 4,
-        price: 1000,
-    },
-    {
-        name: "수박",
-        count: 5,
-        price: 1000,
-    },
-    {
-        name: "참외",
-        count: 6,
-        price: 1000,
-    }, {
-        name: "사과",
-        count: 8,
-        price: 1000,
-
-    }
-]
 const Title = styled.View`
     flex:0.4;
     align-items:center;
@@ -46,24 +24,16 @@ const Tail = styled.View`
     margin-bottom:${({ h }) => h}px;
 `;
 
-const Test = ({ navigation }) => {
+const OrderPage = ({ navigation, route }) => {
+    const { params: { basket } } = route
     const { width } = useWindowDimensions()
     const bar_height = useBottomTabBarHeight()
     const { colors } = useTheme()
+    const [list, setList] = useState([])
     const [logged, setLogged] = useState()
-
-    // const reducer = useCallback((state, action) => {
-    //     switch (action.type) {
-    //         case 'add':
-    //             return api.push({ name: 'test', count: (api.length) + 1, price: 1200 })
-    //         case 'delete':
-    //             return api.pop()
-    //         default:
-    //             return api
-    //     }
-    // }, [])
-    // const [state, dispatch] = useReducer(reducer, api)
-    // // console.log("fdf?:", state)
+    useEffect(() => {
+        setList(...list, basket)
+    }, [])
 
     useFocusEffect(
         useCallback(() => {
@@ -77,32 +47,32 @@ const Test = ({ navigation }) => {
                 }
             })
         }, [])
-    )
+    );
+
     const OrderBtn = useCallback((navigation, logged) => {
         if (logged) {
-            console.log("로그인 됨.")
+            console.log("firebase 연동해야됨.")
         } else {
 
             Alert.alert("로그인", '로그인필요함.', [
                 { text: '확인', style: 'cancel' },
+                //로그인 화면으로 이동 하기 할것 
             ])
         }
     }, [])
+
+    const onDeleteBtn = (id) => {
+        setList(list.filter(li => li.id !== id))
+    }
     return (
         <SafeAreaView style={{ flex: 1, alignItems: 'center', }}>
             <Title>
                 <Text style={{ fontSize: 30, }}>a</Text>
             </Title>
             <Middle>
-                {api.map((a, idx) => <OrderListItem key={idx} list={a} />)}
+                {list.map((a, idx) => <OrderListItem key={idx} list={a} onDeleteBtn={(id) => onDeleteBtn(id)} />)}
             </Middle>
             <Tail h={bar_height}>
-                <Pressable onPress={() => console.log("배열 추가")}>
-                    <Text style={{ fontSize: 30 }}>추가</Text>
-                </Pressable>
-                <Pressable onPress={() => console.log("아이템 빼기")}>
-                    <Text style={{ fontSize: 30 }}>빼기</Text>
-                </Pressable>
                 <Pressable
                     style={{ backgroundColor: colors.button_color, width: width - 20 }}
                     onPress={() => OrderBtn(navigation, logged)}>
@@ -111,8 +81,8 @@ const Test = ({ navigation }) => {
                     </Text>
                 </Pressable>
             </Tail>
-        </SafeAreaView >
+        </SafeAreaView>
     )
 }
 
-export default Test
+export default OrderPage

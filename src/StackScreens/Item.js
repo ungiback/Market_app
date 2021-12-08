@@ -32,7 +32,7 @@ const ProductImag = styled.Image`
 const Description = styled.View`
     flex:1;
     align-items:center;
-`
+`;
 const Item = ({ left, right, onMove }) => {
     const { height } = useWindowDimensions()
     return (

@@ -52,29 +52,8 @@ const ItemDetail = ({ route, navigation }) => {
     useEffect(() => {
         setCount(0)
     }, [])
-    const PlmaBtn = useCallback((key, value) => {
-        key ? setCount(value + 1) : value > 0 ? setCount(value - 1) : ""
-    }, [])
-    // const auth = Auth.getAuth()
-    // const db = Store.getFirestore()
-    // const user = auth.currentUser;
-    const _orderBtn = (name, cnt) => {
-        // if (user) {
-        //     // await Store.addDoc(Store.collection(db, "Order"), {
-        //     //     orderer: user.uid,
-        //     //     email: user.email,
-        //     //     product: {
-        //     //         name: info.name,
-        //     //         count
-        //     //     }
-        //     // })
-        //     // navigation.pop()
-
-        // }
-        // else {
-        //     Alert.alert("로그인을 해주세요")
-        // }
-        navigation.navigate("Home", { "new": { name, cnt } })
+    const PlmaBtn = (plus, value) => {
+        plus ? setCount(value + 1) : value > 0 ? setCount(value - 1) : ""
     }
     return (
         <SafeAreaView style={{
@@ -110,7 +89,7 @@ const ItemDetail = ({ route, navigation }) => {
                     <Addbtn
                         count={count}
                         color={colors.button_color}
-                        onPress={() => { count > 0 ? _orderBtn(info.name, count) : "" }}>
+                        onPress={() => { count > 0 ? navigation.navigate("Home", { "new": { name: info.name, count, id: info.id } }) : "" }}>
                         <Text style={{ textAlign: 'center', fontSize: 24, }}>
                             {count}개 담기
                         </Text>
