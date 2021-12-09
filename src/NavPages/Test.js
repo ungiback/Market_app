@@ -6,6 +6,8 @@ import styled from "styled-components";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useTheme, useFocusEffect } from '@react-navigation/native'
 import { Auth } from "../firebaseConfig";
+import useBasket from "../conponents/useBasket";
+import { useDispatchContxt, useStateContxt } from "../conponents/BasketProvider";
 
 const api = [
     {
@@ -46,6 +48,7 @@ const Tail = styled.View`
     margin-bottom:${({ h }) => h}px;
 `;
 
+
 const Test = ({ navigation }) => {
     const { width } = useWindowDimensions()
     const bar_height = useBottomTabBarHeight()
@@ -64,7 +67,7 @@ const Test = ({ navigation }) => {
     // }, [])
     // const [state, dispatch] = useReducer(reducer, api)
     // // console.log("fdf?:", state)
-
+    // console.log(list)
     useFocusEffect(
         useCallback(() => {
             const auth = Auth.getAuth()
@@ -88,16 +91,19 @@ const Test = ({ navigation }) => {
             ])
         }
     }, [])
+    const state = useStateContxt()
+    const dispatch = useDispatchContxt()
+    console.log(state)
     return (
         <SafeAreaView style={{ flex: 1, alignItems: 'center', }}>
             <Title>
                 <Text style={{ fontSize: 30, }}>a</Text>
             </Title>
             <Middle>
-                {api.map((a, idx) => <OrderListItem key={idx} list={a} />)}
+                {state.map((a, idx) => <OrderListItem key={idx} list={a} />)}
             </Middle>
             <Tail h={bar_height}>
-                <Pressable onPress={() => console.log("배열 추가")}>
+                <Pressable onPress={() => dispatch({ type: 'add', item: { name: 'imback', count: 21, price: 1200 } })}>
                     <Text style={{ fontSize: 30 }}>추가</Text>
                 </Pressable>
                 <Pressable onPress={() => console.log("아이템 빼기")}>

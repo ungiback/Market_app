@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { View, useWindowDimensions, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import New_arr from '../../NewArr';
@@ -8,11 +8,12 @@ import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useTheme } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import OrderBtn from '../conponents/OrderBtn';
+import useBasket from '../conponents/useBasket';
+import { useDispatchContxt, useStateContxt } from '../conponents/BasketProvider';
 
 
 const Home = ({ navigation, route }) => {
     const [lists, setLists] = useState([])
-    const [basket, setBasket] = useState([])
     const { width } = useWindowDimensions()
     const tabBarHeight = useBottomTabBarHeight()
     const { colors } = useTheme()
@@ -20,17 +21,13 @@ const Home = ({ navigation, route }) => {
         setLists(New_arr(ApiTest))
     }, [])
 
-    useEffect(() => {
-        if (route?.params?.new) {
-            setBasket([...basket, route?.params?.new])
-        }
-    }, [route?.params])
+    const state = useStateContxt()
 
     const pagemove = (info) => {
         navigation.navigate("Detail", { info })
     }
     const OrderPage_move = () => {
-        navigation.navigate("OrderPage", { basket })
+        navigation.navigate("OrderPage")
     }
     return (
         <SafeAreaView style={{
@@ -48,7 +45,7 @@ const Home = ({ navigation, route }) => {
                     overScrollMode="never"
                     style={{ borderRadius: 10 }}
                 />
-                <OrderBtn OrderPage_move={() => OrderPage_move()} cnt={basket.length} />
+                <OrderBtn OrderPage_move={() => OrderPage_move()} cnt={state.length} />
             </View>
         </SafeAreaView >
     )

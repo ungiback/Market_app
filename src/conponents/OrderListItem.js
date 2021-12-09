@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Text, useWindowDimensions, View } from 'react-native'
 import styled from "styled-components";
 import { AntDesign } from '@expo/vector-icons';
+import useBasket from "./useBasket";
 
 
 const Container = styled.View`
@@ -13,6 +14,7 @@ const Container = styled.View`
     border-radius:10px;
 `;
 const OrderListItem = ({ list, onDeleteBtn }) => {
+    console.log("sss", list)
     const [cnt, setCnt] = useState()
     const { width } = useWindowDimensions()
     useEffect(() => {
@@ -33,7 +35,9 @@ const OrderListItem = ({ list, onDeleteBtn }) => {
                 </Text>
                 <AntDesign name="minus" size={24} color="black" onPress={() => PlmaBtn('', cnt)} />
             </View>
-            <AntDesign name="delete" size={24} color="black" onPress={() => onDeleteBtn(list.id)} />
+            <AntDesign name="delete" size={24} color="black"
+                onPress={() => onDeleteBtn(list.id)}
+            />
         </Container>
     )
 }

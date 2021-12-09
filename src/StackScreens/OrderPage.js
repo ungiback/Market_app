@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useTheme, useFocusEffect } from '@react-navigation/native'
 import { Auth } from "../firebaseConfig";
+import { useDispatchContxt, useStateContxt } from "../conponents/BasketProvider";
 
 const Title = styled.View`
     flex:0.4;
@@ -24,17 +25,14 @@ const Tail = styled.View`
     margin-bottom:${({ h }) => h}px;
 `;
 
-const OrderPage = ({ navigation, route }) => {
-    const { params: { basket } } = route
+const OrderPage = ({ navigation }) => {
     const { width } = useWindowDimensions()
     const bar_height = useBottomTabBarHeight()
     const { colors } = useTheme()
-    const [list, setList] = useState([])
     const [logged, setLogged] = useState()
-    useEffect(() => {
-        setList(...list, basket)
-    }, [])
 
+    const state = useStateContxt()
+    const dispatch = useDispatchContxt()
     useFocusEffect(
         useCallback(() => {
             const auth = Auth.getAuth()
@@ -62,7 +60,7 @@ const OrderPage = ({ navigation, route }) => {
     }, [])
 
     const onDeleteBtn = (id) => {
-        setList(list.filter(li => li.id !== id))
+        dispatch({ type: 'delete', id })
     }
     return (
         <SafeAreaView style={{ flex: 1, alignItems: 'center', }}>
@@ -70,7 +68,9 @@ const OrderPage = ({ navigation, route }) => {
                 <Text style={{ fontSize: 30, }}>a</Text>
             </Title>
             <Middle>
-                {list.map((a, idx) => <OrderListItem key={idx} list={a} onDeleteBtn={(id) => onDeleteBtn(id)} />)}
+                {state.map((a, idx) => <OrderListItem key={idx} list={a}
+                    onDeleteBtn={(id) => onDeleteBtn(id)}
+                />)}
             </Middle>
             <Tail h={bar_height}>
                 <Pressable
