@@ -8,9 +8,9 @@ import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useTheme } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import OrderBtn from '../conponents/OrderBtn';
-import useBasket from '../conponents/useBasket';
-import { useDispatchContxt, useStateContxt } from '../conponents/BasketProvider';
-
+import { useStateContxt } from '../conponents/BasketProvider';
+import icon_svg from '../../assets/basket.svg'
+import { WithLocalSvg } from 'react-native-svg';
 
 const Home = ({ navigation, route }) => {
     const [lists, setLists] = useState([])
@@ -35,7 +35,12 @@ const Home = ({ navigation, route }) => {
         }}
         >
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
-                <Ionicons name="basket-outline" size={100} color="black" />
+                {/* <Ionicons name="basket-outline" size={100} color="black" /> */}
+                <WithLocalSvg
+                    width={110}
+                    height={110}
+                    asset={icon_svg}
+                />
             </View>
             <View style={{ flex: 5, width: width - 20, marginBottom: tabBarHeight, }}>
                 <FlatList

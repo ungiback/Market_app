@@ -33,6 +33,7 @@ const OrderPage = ({ navigation }) => {
 
     const state = useStateContxt()
     const dispatch = useDispatchContxt()
+
     useFocusEffect(
         useCallback(() => {
             const auth = Auth.getAuth()
@@ -60,15 +61,15 @@ const OrderPage = ({ navigation }) => {
     }, [])
 
     const onDeleteBtn = (id) => {
-        dispatch({ type: 'delete', id })
+        dispatch({ type: 'delete', hold_num: id })
     }
     return (
         <SafeAreaView style={{ flex: 1, alignItems: 'center', }}>
             <Title>
-                <Text style={{ fontSize: 30, }}>a</Text>
+                <Text style={{ fontSize: 30, }}>바구니</Text>
             </Title>
             <Middle>
-                {state.map((a, idx) => <OrderListItem key={idx} list={a}
+                {state.map((a, idx) => <OrderListItem key={idx} list={a} num={idx}
                     onDeleteBtn={(id) => onDeleteBtn(id)}
                 />)}
             </Middle>
@@ -77,7 +78,7 @@ const OrderPage = ({ navigation }) => {
                     style={{ backgroundColor: colors.button_color, width: width - 20 }}
                     onPress={() => OrderBtn(navigation, logged)}>
                     <Text style={{ fontSize: 24, textAlign: 'center' }}>
-                        b
+                        주문하기
                     </Text>
                 </Pressable>
             </Tail>

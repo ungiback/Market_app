@@ -18,7 +18,7 @@ const Login = ({ navigation }) => {
         try {
             const confirm = await Auth.signInWithEmailAndPassword(auth, id, password)
             if (confirm) {
-                navigation.pop()
+                navigation.goBack()
             }
         } catch (error) {
             console.log(error.code)

@@ -6,7 +6,6 @@ import styled from "styled-components";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useTheme, useFocusEffect } from '@react-navigation/native'
 import { Auth } from "../firebaseConfig";
-import useBasket from "../conponents/useBasket";
 import { useDispatchContxt, useStateContxt } from "../conponents/BasketProvider";
 
 const api = [
@@ -55,19 +54,6 @@ const Test = ({ navigation }) => {
     const { colors } = useTheme()
     const [logged, setLogged] = useState()
 
-    // const reducer = useCallback((state, action) => {
-    //     switch (action.type) {
-    //         case 'add':
-    //             return api.push({ name: 'test', count: (api.length) + 1, price: 1200 })
-    //         case 'delete':
-    //             return api.pop()
-    //         default:
-    //             return api
-    //     }
-    // }, [])
-    // const [state, dispatch] = useReducer(reducer, api)
-    // // console.log("fdf?:", state)
-    // console.log(list)
     useFocusEffect(
         useCallback(() => {
             const auth = Auth.getAuth()

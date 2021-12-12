@@ -6,16 +6,21 @@ const BasketDispatchContext = createContext()
 
 const BasketProvider = ({ children }) => {
 
-    const delete_func = (ss, id) => {
-        const new_arr = ss.filter(s => s.id !== id)
-        return new_arr
-    }
     const Basket = (state, action) => {
         switch (action.type) {
             case 'add':
                 return [...state, action.item]
             case 'delete':
-                return state.filter(item => item.id !== action.id)
+                return state.filter(item => item.hold_num !== action.hold_num)
+            // case 'Item_Cnt_Add':
+            //     return [
+            //         ...state,
+            //         state[action.num], {
+            //             ...state[action.num],
+            //             count: state[action.num].count + 1
+            //         }
+            //     ]
+            // 바구니에서 개수 변경하면 숫자만 변경되지 않고 새로 아이템이 추가가 된다.
         }
     }
     const [state, dispatch] = useReducer(Basket, [])

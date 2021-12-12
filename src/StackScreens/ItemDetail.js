@@ -1,12 +1,12 @@
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs"
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { View, Text, Image, useWindowDimensions, Pressable, Alert, LogBox } from 'react-native'
 import { SafeAreaView } from "react-native-safe-area-context"
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { useTheme } from "@react-navigation/native";
 import styled from 'styled-components'
-import { Auth, Store } from "../firebaseConfig";
 import { useDispatchContxt } from "../conponents/BasketProvider";
+import * as Random from 'expo-random';
 
 
 LogBox.ignoreLogs(['Setting a timer']);  // 음... web전용으로 firebase랑 연동을 하는데 expo는 web전용 firebase의 느린 방식을 못 기다린다는 것이라고 해서 'Setting a timer...'라고 뜨는 경고를 무시를 설정을 했더니 됐다. 
@@ -50,23 +50,22 @@ const ItemDetail = ({ route, navigation }) => {
     const { width } = useWindowDimensions()
     const [count, setCount] = useState()
     const { colors } = useTheme()
-    console.log("count:", count)
     useEffect(() => {
         setCount(0)
     }, [])
-    const PlmaBtn = (plus, value) => {
+    const PlmaBtn = useCallback((plus, value) => {
         plus ? setCount(value + 1) : value > 0 ? setCount(value - 1) : ""
-    }
-
+    }, [])
     const dispatch = useDispatchContxt()
-    const hold = useCallback(() => {
+    const hold = () => {
         try {
+            const hold_num = `${info.name[0]}-${Random.getRandomBytes(1)[0]}`
             navigation.navigate('Home')
-            dispatch({ type: 'add', item: { name: info.name, count: parseInt(count), price: info.price, id: info.id } })
+            dispatch({ type: 'add', item: { name: info.name, count, price: info.price, item_id: info.id, hold_num } })
         } catch (error) {
             console.log(error)
         }
-    }, [])
+    }
     return (
         <SafeAreaView style={{
             flex: 2,
