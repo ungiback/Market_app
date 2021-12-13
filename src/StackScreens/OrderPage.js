@@ -7,6 +7,7 @@ import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useTheme, useFocusEffect } from '@react-navigation/native'
 import { Auth, Store } from "../firebaseConfig";
 import { useDispatchContxt, useStateContxt } from "../conponents/BasketProvider";
+import { Ionicons } from '@expo/vector-icons';
 
 const Title = styled.View`
     flex:0.4;
@@ -23,6 +24,12 @@ const Tail = styled.View`
     align-items:center;
     justify-content:center;
     margin-bottom:${({ h }) => h}px;
+`;
+const Backbtn = styled.Pressable`
+    align-items:flex-start;
+    width:100%;
+    position:absolute;
+    padding-left:9px;
 `;
 
 const OrderPage = ({ navigation }) => {
@@ -51,32 +58,18 @@ const OrderPage = ({ navigation }) => {
     );
 
     const OrderBtn = useCallback(async (navigation, logged) => {
+        const today = new Date()
+        const order_DATE = today.getFullYear() + '.' + (today.getMonth() + 1) + '.' + (today.getDate() + 1)
         if (logged) {
             console.log("firebase 연동해야됨.")
             const User = Auth.getAuth().currentUser
             try {
-                const orderRef = Store.doc(Store.getFirestore(), 'Order', User.uid)
+                const orderRef = Store.doc(Store.getFirestore(), User.uid, order_DATE)
                 await Store.setDoc(orderRef, {
-                    주문자: {
-                        주소: " ",
-                        이름: " ",
-                        email: " ",
-                    },
-                    내역: {
-                        주문날짜1: [
-                            { name: "망고", cnt: 2 },
-                            { name: "수박", cnt: 2 },
-                        ],
-                        주문날짜2: [
-                            { name: "오렌지", cnt: 4 },
-                            { name: "사과", cnt: 5 },
-                        ],
-                        주문날짜3: [
-                            { name: "딸기", cnt: 12 },
-                            { name: "체리", cnt: 7 },
-                        ],
-                    }
-
+                    prudect: Object.values(state)
+                }).then(() => {
+                    dispatch({ type: 'success' })
+                    navigation.goBack()
                 })
             } catch (error) {
                 console.log(error)
@@ -95,6 +88,9 @@ const OrderPage = ({ navigation }) => {
     return (
         <SafeAreaView style={{ flex: 1, alignItems: 'center', }}>
             <Title>
+                <Backbtn onPress={() => navigation.goBack()}>
+                    <Ionicons name="arrow-back" size={30} color="black" />
+                </Backbtn>
                 <Text style={{ fontSize: 30, }}>바구니</Text>
             </Title>
             <Middle>
