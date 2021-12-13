@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import styled from "styled-components";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useTheme, useFocusEffect } from '@react-navigation/native'
-import { Auth } from "../firebaseConfig";
+import { Auth, Store } from "../firebaseConfig";
 import { useDispatchContxt, useStateContxt } from "../conponents/BasketProvider";
 
 const api = [
@@ -54,36 +54,46 @@ const Test = ({ navigation }) => {
     const { colors } = useTheme()
     const [logged, setLogged] = useState()
 
-    // useFocusEffect(
-    //     useCallback(() => {
-    //         const auth = Auth.getAuth()
-    //         Auth.onAuthStateChanged(auth, (user) => {
-    //             if (user) {
-    //                 setLogged(true)
-    //             }
-    //             else {
-    //                 setLogged(false)
-    //             }
-    //         })
-    //     }, [])
-    // )
-    const OrderBtn = useCallback((navigation, logged) => {
-        if (logged) {
-            console.log("로그인 됨.")
-        } else {
+    // const state = useStateContxt()
+    // const dispatch = useDispatchContxt()
 
-            Alert.alert("로그인", '로그인필요함.', [
-                { text: '확인', style: 'cancel' },
-            ])
+    const today = new Date()
+    const order_DATE = today.getFullYear() + '.' + (today.getMonth() + 1) + '.' + today.getDate()
+    const todate = () => {
+        console.log(order_DATE)
+    }
+    const firebtn = async () => {
+
+        const docRef = Store.doc(Store.getFirestore(), "Order", "lvLBvCAMzYbnDs2JbMiX5Z1KoK72")
+        try {
+            const docSnap = await Store.getDoc(docRef)
+            if (docSnap.exists()) {
+
+            } else {
+
+            }
+        } catch (error) {
+            console.log(error)
         }
-    }, [])
-    const state = useStateContxt()
-    const dispatch = useDispatchContxt()
-    console.log("test", state)
+    }
+
     return (
         <SafeAreaView style={{ flex: 1, alignItems: 'center', }}>
             <Title>
-                <Text style={{ fontSize: 30, }}>a</Text>
+                <Pressable
+                    style={{ backgroundColor: colors.button_color, width: width - 20 }}
+                    onPress={() => firebtn()}>
+                    <Text style={{ fontSize: 24, textAlign: 'center' }}>
+                        호출
+                    </Text>
+                </Pressable>
+                <Pressable
+                    style={{ backgroundColor: colors.button_color, width: width - 20, marginTop: 30 }}
+                    onPress={() => todate()}>
+                    <Text style={{ fontSize: 24, textAlign: 'center' }}>
+                        날짜
+                    </Text>
+                </Pressable>
             </Title>
             {/* <Middle>
                 {state.map((a, idx) => <OrderListItem key={idx} list={a} />)}
@@ -91,9 +101,6 @@ const Test = ({ navigation }) => {
             <Tail h={bar_height}>
                 <Pressable onPress={() => dispatch({ type: 'add', item: { name: 'imback', count: 21, price: 1200 } })}>
                     <Text style={{ fontSize: 30 }}>추가</Text>
-                </Pressable>
-                <Pressable onPress={() => console.log("아이템 빼기")}>
-                    <Text style={{ fontSize: 30 }}>빼기</Text>
                 </Pressable>
                 <Pressable
                     style={{ backgroundColor: colors.button_color, width: width - 20 }}
