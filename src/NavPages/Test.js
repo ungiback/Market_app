@@ -54,19 +54,19 @@ const Test = ({ navigation }) => {
     const { colors } = useTheme()
     const [logged, setLogged] = useState()
 
-    useFocusEffect(
-        useCallback(() => {
-            const auth = Auth.getAuth()
-            Auth.onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    setLogged(true)
-                }
-                else {
-                    setLogged(false)
-                }
-            })
-        }, [])
-    )
+    // useFocusEffect(
+    //     useCallback(() => {
+    //         const auth = Auth.getAuth()
+    //         Auth.onAuthStateChanged(auth, (user) => {
+    //             if (user) {
+    //                 setLogged(true)
+    //             }
+    //             else {
+    //                 setLogged(false)
+    //             }
+    //         })
+    //     }, [])
+    // )
     const OrderBtn = useCallback((navigation, logged) => {
         if (logged) {
             console.log("로그인 됨.")
@@ -79,15 +79,15 @@ const Test = ({ navigation }) => {
     }, [])
     const state = useStateContxt()
     const dispatch = useDispatchContxt()
-    console.log(state)
+    console.log("test", state)
     return (
         <SafeAreaView style={{ flex: 1, alignItems: 'center', }}>
             <Title>
                 <Text style={{ fontSize: 30, }}>a</Text>
             </Title>
-            <Middle>
+            {/* <Middle>
                 {state.map((a, idx) => <OrderListItem key={idx} list={a} />)}
-            </Middle>
+            </Middle> */}
             <Tail h={bar_height}>
                 <Pressable onPress={() => dispatch({ type: 'add', item: { name: 'imback', count: 21, price: 1200 } })}>
                     <Text style={{ fontSize: 30 }}>추가</Text>

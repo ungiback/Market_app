@@ -33,8 +33,16 @@ const OrderListItem = ({ num, list, onDeleteBtn }) => {
                 <Text style={{ fontSize: 15 }}>
                     {num + 1}.{list.name}
                 </Text>
+                <Text>
+                    개당 {list.price}원
+                </Text>
             </View>
-            <View style={{ flex: 1, flexDirection: 'row', borderWidth: 1, borderRadius: 10, padding: 5, justifyContent: 'center', marginRight: 13 }}>
+            <View style={{ justifyContent: 'center', alignItems: 'center', marginRight: 40 }}>
+                <Text>
+                    {list.count * list.price} 원
+                </Text>
+            </View>
+            <View style={{ flex: 1, flexDirection: 'row', borderWidth: 1, borderRadius: 10, padding: 5, justifyContent: 'center', marginRight: 13, alignItems: 'center' }}>
                 {/* <AntDesign name="plus" size={24} color="black" onPress={() => PlmaBtn('plus', cnt)} />
                 <Text style={{ flex: 0.5, textAlign: 'center' }}>
                     {cnt}
@@ -45,7 +53,7 @@ const OrderListItem = ({ num, list, onDeleteBtn }) => {
                 </Text>
             </View>
             <AntDesign name="delete" size={24} color="black"
-                onPress={() => onDeleteBtn(list.hold_num)}
+                onPress={() => onDeleteBtn(list.put_num)}
             />
         </Container>
     )

@@ -59,9 +59,9 @@ const ItemDetail = ({ route, navigation }) => {
     const dispatch = useDispatchContxt()
     const hold = () => {
         try {
-            const hold_num = `${info.name[0]}-${Random.getRandomBytes(1)[0]}`
+            const put_num = `${info.name[0]}-${Random.getRandomBytes(1)[0]}`
             navigation.navigate('Home')
-            dispatch({ type: 'add', item: { name: info.name, count, price: info.price, item_id: info.id, hold_num } })
+            dispatch({ type: 'add', item: { name: info.name, count, price: info.price, item_id: info.id, put_num } })
         } catch (error) {
             console.log(error)
         }

@@ -5,6 +5,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import Test from './NavPages/Test';
 import { Home, Item, ItemDetail, Login, UserPage, OrderPage } from "./StackScreens";
 import { useTheme } from '@react-navigation/native'
+import BasketProvider from './conponents/BasketProvider';
 
 const Stack = createStackNavigator()
 
@@ -19,26 +20,28 @@ const TabNavigator = () => {
                 color={focused ? colors.focused_color : colors.unfocused_color} />
         )
     }
-    const HomeItemStack = () => {
+    const HomeItemStack = useCallback(() => {
         return (
-            <Stack.Navigator screenOptions={{
-                headerShown: false,
-            }}>
-                <Stack.Screen name="Home" component={Home} />
-                <Stack.Screen name="Item" component={Item} />
-                <Stack.Screen name="Detail" component={ItemDetail} />
-                <Stack.Screen name="OrderPage" component={OrderPage} />
-            </Stack.Navigator>
+            <BasketProvider>
+                <Stack.Navigator screenOptions={{
+                    headerShown: false,
+                }}>
+                    <Stack.Screen name="Home" component={Home} />
+                    <Stack.Screen name="Item" component={Item} />
+                    <Stack.Screen name="Detail" component={ItemDetail} />
+                    <Stack.Screen name="OrderPage" component={OrderPage} />
+                </Stack.Navigator>
+            </BasketProvider>
         )
-    }
-    const UserStack = () => {
+    }, [])
+    const UserStack = useCallback(() => {
         return (
             <Stack.Navigator>
                 <Stack.Screen name="UserPage" component={UserPage} />
                 <Stack.Screen name="login" component={Login} />
             </Stack.Navigator >
         )
-    }
+    }, [])
     return (
         <Tab.Navigator
             screenOptions={{

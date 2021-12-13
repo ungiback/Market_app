@@ -7,14 +7,13 @@ import { Auth } from "../firebaseConfig";
 const UserPage = ({ navigation }) => {
     const [logged, setLogged] = useState()
     const { width } = useWindowDimensions()
+
     const auth = Auth.getAuth()
     useEffect(() => {
         Auth.onAuthStateChanged(auth, (user) => {
             if (user) {
-                console.log("왜 여러번 출력하지? 여기 다시 생각해보기")
                 setLogged(true)
-            } else {
-                setLogged(false)
+                console.log("왜 여러번 출력하지? 여기 다시 생각해보기")
             }
         })
     }, [])
@@ -28,7 +27,6 @@ const UserPage = ({ navigation }) => {
     //         })
     //     }, [])
     // )
-
     const LogOut_Alert = useCallback(() => {
         Alert.alert(
             "Sign-Out",
@@ -59,7 +57,7 @@ const UserPage = ({ navigation }) => {
                     :
                     <Pressable
                         style={{ padding: 10, marginTop: 10, width: 100 }}
-                        onPress={() => navigation.push('login')}>
+                        onPress={() => navigation.navigate('login')}>
                         <Text
                             style={{ color: '#6a3cbc', fontSize: 20, textAlign: 'center' }}>로그인</Text>
                     </Pressable>

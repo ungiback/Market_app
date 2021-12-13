@@ -11,7 +11,7 @@ const BasketProvider = ({ children }) => {
             case 'add':
                 return [...state, action.item]
             case 'delete':
-                return state.filter(item => item.hold_num !== action.hold_num)
+                return state.filter(item => item.put_num !== action.put_num)
             // case 'Item_Cnt_Add':
             //     return [
             //         ...state,

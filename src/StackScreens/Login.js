@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import styled from 'styled-components'
 import Rb_Input from "../conponents/Rb_Input";
 import { Auth } from "../firebaseConfig";
-
+import { useIsFocused } from "@react-navigation/native";
 
 const Container = styled.View`
     flex:1;
@@ -16,14 +16,15 @@ const Login = ({ navigation }) => {
     const auth = Auth.getAuth()
     const SignIn = async (id, password, navigation) => {
         try {
-            const confirm = await Auth.signInWithEmailAndPassword(auth, id, password)
-            if (confirm) {
-                navigation.goBack()
+            if (useIsFocused) {  //Can’t perform a React state update on an unmounted component. 에러 해결에 최선의 방법인가?
+                const confirm = await Auth.signInWithEmailAndPassword(auth, id, password)
+                if (confirm) {
+                    navigation.goBack()
+                }
             }
         } catch (error) {
             console.log(error.code)
         }
-
     }
     return (
         <Container>

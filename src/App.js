@@ -7,9 +7,7 @@ import BasketProvider from './conponents/BasketProvider';
 const App = () => {
     return (
         <NavigationContainer theme={theme}>
-            <BasketProvider>
-                <TabNavigator />
-            </BasketProvider>
+            <TabNavigator />
         </NavigationContainer>
 
     )
