@@ -59,14 +59,21 @@ const OrderPage = ({ navigation }) => {
 
     const OrderBtn = useCallback(async (navigation, logged) => {
         const today = new Date()
-        const order_DATE = today.getFullYear() + '.' + (today.getMonth() + 1) + '.' + (today.getDate() + 1)
+        const order_DATE = today.getFullYear() + '.' + (today.getMonth() + 1) + '.' + (today.getDate())
         if (logged) {
             console.log("firebase 연동해야됨.")
             const User = Auth.getAuth().currentUser
             try {
-                const orderRef = Store.doc(Store.getFirestore(), User.uid, order_DATE)
-                await Store.setDoc(orderRef, {
-                    prudect: Object.values(state)
+                const orderRef = Store.doc(Store.getFirestore(), "Order", User.uid)
+                const get_data = await Store.getDoc(Store.doc(Store.getFirestore(), "Order", User.uid))
+                const order_histoy = get_data.data().order_histoy
+
+                const dataSet = {
+                    ...order_histoy,
+                    [order_DATE]: Object.values(state)
+                }
+                await Store.updateDoc(orderRef, {
+                    order_histoy: dataSet
                 }).then(() => {
                     dispatch({ type: 'success' })
                     navigation.goBack()

@@ -38,7 +38,7 @@ const Login = ({ navigation }) => {
                 value={password}
                 onChangeText={text => setPassword(text)}
                 secureTextEntry={true} />
-            <Pressable style={{ backgroundColor: '#ffe8df', borderRadius: 15, width: '100%' }}
+            <Pressable style={{ backgroundColor: '#83A591', borderRadius: 15, width: '100%' }}
                 onPress={() => SignIn(id, password, navigation)}>
                 <Text style={{ fontSize: 30, textAlign: 'center' }}>Sign in</Text>
             </Pressable>
