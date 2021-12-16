@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { FontAwesome } from '@expo/vector-icons';
 import Test from './NavPages/Test';
-import { Home, Item, ItemDetail, Login, UserPage, OrderPage } from "./StackScreens";
+import { Home, Item, ItemDetail, Login, UserPage, OrderPage, SignUp } from "./StackScreens";
 import { useTheme } from '@react-navigation/native'
 import BasketProvider from './conponents/BasketProvider';
 
@@ -39,6 +39,7 @@ const TabNavigator = () => {
             <Stack.Navigator>
                 <Stack.Screen name="UserPage" component={UserPage} />
                 <Stack.Screen name="login" component={Login} />
+                <Stack.Screen name="signup" component={SignUp} />
             </Stack.Navigator >
         )
     }, [])
@@ -55,8 +56,7 @@ const TabNavigator = () => {
                 }
             }}>
 
-
-            <Tab.Screen name="Test" component={Test}
+            <Tab.Screen name="List" component={HomeItemStack}
                 options={{
                     tabBarIcon: props => IconSet({
                         ...props,
@@ -70,13 +70,6 @@ const TabNavigator = () => {
                         name: 'user',
                     }),
                     // tabBarBadge: 19
-                }} />
-            <Tab.Screen name="List" component={HomeItemStack}
-                options={{
-                    tabBarIcon: props => IconSet({
-                        ...props,
-                        name: 'list',
-                    }),
                 }} />
 
         </Tab.Navigator>

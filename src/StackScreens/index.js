@@ -4,6 +4,7 @@ import ItemDetail from './ItemDetail';
 import Login from './Login';
 import UserPage from './UserPage';
 import OrderPage from './OrderPage';
+import SignUp from './SignUp';
 
 export {
     Home,
@@ -11,5 +12,6 @@ export {
     ItemDetail,
     Login,
     UserPage,
-    OrderPage
+    OrderPage,
+    SignUp
 }

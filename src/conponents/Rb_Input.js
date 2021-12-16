@@ -9,14 +9,14 @@ const Container = styled.View`
     margin-bottom:10px;
     background:#DDDDDD;
     border:1px;
+    border-radius:15px;
 `;
 const Input = styled.TextInput`
-    border-radius:3px;
     padding-left:7px;
 `
 
 const Rb_Input = (props) => {
-    const { label, value, onChangeText, secureTextEntry } = props
+    const { label, value, onChangeText, secureTextEntry, returnKeyType } = props
     const { width } = useWindowDimensions()
     return (
         <Container width={width - 20}>
@@ -25,6 +25,7 @@ const Rb_Input = (props) => {
                 placeholder={label}
                 secureTextEntry={secureTextEntry}
                 onChangeText={onChangeText}
+                returnKeyType={returnKeyType}
             />
         </Container>
     )

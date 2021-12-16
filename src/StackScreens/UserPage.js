@@ -1,4 +1,3 @@
-import { useFocusEffect } from "@react-navigation/core";
 import React, { useCallback, useEffect, useState } from "react";
 import { Alert, useWindowDimensions } from 'react-native';
 import { View, Text, Pressable } from "react-native";
@@ -13,20 +12,11 @@ const UserPage = ({ navigation }) => {
         Auth.onAuthStateChanged(auth, (user) => {
             if (user) {
                 setLogged(true)
-                console.log("왜 여러번 출력하지? 여기 다시 생각해보기")
+                // console.log("왜 여러번 출력하지? 여기 다시 생각해보기")
             }
         })
     }, [])
-    // useFocusEffect(
-    //     useCallback(() => {
-    //         Auth.onAuthStateChanged(auth, (user) => {
-    //             if (user) {
-    //                 console.log("왜 여러번 출력하지? 여기 다시 생각해보기")
-    //                 setLogged(true)
-    //             }
-    //         })
-    //     }, [])
-    // )
+    
     const LogOut_Alert = useCallback(() => {
         Alert.alert(
             "Sign-Out",
@@ -44,8 +34,7 @@ const UserPage = ({ navigation }) => {
                         })
                     }
                 }
-            ],
-            { cancelable: false }
+            ]
         )
     }, [])
 
@@ -53,18 +42,22 @@ const UserPage = ({ navigation }) => {
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
             <View style={{ flex: 1, width: width - 20, justifyContent: 'center' }}>
                 {logged ?
-                    <Text style={{ padding: 10, marginTop: 10, width: 100 }} onPress={LogOut_Alert}>Sign Out</Text>
+                    <Pressable
+                        style={{ padding: 10, marginTop: 10, width: 100 }}
+                        onPress={LogOut_Alert}>
+                        <Text style={{ color: '#6a3cbc', fontSize: 20, textAlign: 'center' }}>로그아웃</Text>
+                    </Pressable>
                     :
                     <Pressable
                         style={{ padding: 10, marginTop: 10, width: 100 }}
                         onPress={() => navigation.navigate('login')}>
-                        <Text
-                            style={{ color: '#6a3cbc', fontSize: 20, textAlign: 'center' }}>로그인</Text>
+                        <Text style={{ color: '#6a3cbc', fontSize: 20, textAlign: 'center' }}>로그인</Text>
                     </Pressable>
                 }
+
             </View>
             <View
-                style={{ flex: 6, width: width - 20, justifyContent: 'center', alignItems: 'center' }}>
+                style={{ flex: 6, width: width - 20, alignItems: 'center', }}>
                 <Text>
                     공지 공간
                 </Text>

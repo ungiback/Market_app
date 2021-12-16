@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { View, Text, Pressable, useWindowDimensions, Alert, ScrollView } from "react-native";
+import React, { useState, useCallback } from "react";
+import { Text, Pressable, useWindowDimensions, Alert, ScrollView } from "react-native";
 import OrderListItem from "../conponents/OrderListItem";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styled from "styled-components";
@@ -59,9 +59,15 @@ const OrderPage = ({ navigation }) => {
 
     const OrderBtn = useCallback(async (navigation, logged) => {
         const today = new Date()
-        const order_DATE = today.getFullYear() + '.' + (today.getMonth() + 1) + '.' + (today.getDate())
+        function todeFormat(today) {
+            const YYYY = today.getFullYear()
+            const MM = (today.getMonth() + 1) < 10 ? '0' + (today.getMonth() + 1) : (today.getMonth() + 1)
+            const DD = today.getDate() < 10 ? '0' + today.getDate() : (today.getDate()-1)
+
+            return YYYY + "" + MM + "" + DD
+        }
+        const order_DATE = todeFormat(today)
         if (logged) {
-            console.log("firebase 연동해야됨.")
             const User = Auth.getAuth().currentUser
             try {
                 const orderRef = Store.doc(Store.getFirestore(), "Order", User.uid)
