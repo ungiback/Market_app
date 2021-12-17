@@ -8,7 +8,8 @@
   [a,b,c,d,e,f] => [{a,b},{b,c},{e,f}]
   ```
   위와 같이 새로운 배열을 생성 해보자 라는 생각을 했고 
-  arr|new_arr|
+  <p float="left">
+   arr|new_arr|
   ---|---|
   a |{a, b}|
   b |{c, d}|
@@ -16,6 +17,8 @@
   d | --- |
   e | --- |
   f | --- |
+  <img src="https://user-images.githubusercontent.com/38012855/146504472-45789eb6-6307-49c6-9d2d-3f73a5cccf07.jpg" width="200" height="400"/>
+  <p/>
 
   한줄에 하나씩 표현하는것을 한줄에 두개씩 표현하여 grid layout같은 느낌을 나타냈다.
 
