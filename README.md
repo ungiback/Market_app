@@ -30,3 +30,5 @@
 앱개발은 expo cli로 시작을 했고 
 인증과 DB는 firebase를 사용하였다. Reactnative가 자바스크립트 언어 이다보니깐 firebase문서를 Web방식을 적용을 했는데 여기서 expo와 web방식에 firebase가 약간 문제가 있는다고 한다. __error__ 는 아니고 __Warning__ 이였는데 안되는 건 아니였다.
 
+
+저장방식을 바꿔 주었다.
