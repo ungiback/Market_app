@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from "react";
-import { View, Text, Pressable } from "react-native";
+import React, { useCallback, useState, useRef } from "react";
+import { View, Text, Pressable, TouchableWithoutFeedback, keyboard, Keyboard } from "react-native";
 import styled from 'styled-components'
 import Rb_Input from "../conponents/Rb_Input";
 import { Auth } from "../firebaseConfig";
@@ -15,6 +15,7 @@ const Login = ({ navigation }) => {
     const [id, setId] = useState("")
     const [password, setPassword] = useState("")
     const [errorMsg, setErrorMsg] = useState("")
+    const passwordRef = useRef()
     const auth = Auth.getAuth()
     const SignIn = useCallback(async (id, password, navigation) => {
         try {
@@ -44,34 +45,40 @@ const Login = ({ navigation }) => {
     }, [])
     const { colors } = useTheme()
     return (
-        <Container>
-            <Rb_Input
-                label="로그인"
-                value={id}
-                onChangeText={text => setId(text)}
-                secureTextEntry={false}
-                returnKeyType="next"
-            />
-            <Rb_Input
-                label="비밀번호"
-                value={password}
-                onChangeText={text => setPassword(text)}
-                secureTextEntry={true}
-                returnKeyType="done" />
-            <View style={{ padding: 10 }}>
-                <Text style={{ fontSize: 17, color: '#eb586f' }}>{errorMsg}</Text>
-            </View>
-            <View >
-                <Pressable style={{ backgroundColor: colors.button_color, borderRadius: 15, width: 250, marginBottom: 10 }}
-                    onPress={() => SignIn(id, password, navigation)}>
-                    <Text style={{ fontSize: 20, textAlign: 'center' }}>로그인</Text>
-                </Pressable>
-                <Pressable style={{ backgroundColor: colors.button_color, borderRadius: 15, width: 250 }}
-                    onPress={() => navigation.navigate('signup')}>
-                    <Text style={{ fontSize: 20, textAlign: 'center' }}>회원가입</Text>
-                </Pressable>
-            </View>
-        </Container>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <Container>
+                <Rb_Input
+                    label="로그인"
+                    value={id}
+                    onChangeText={text => setId(text)}
+                    secureTextEntry={false}
+                    returnKeyType="next"
+                    onSubmitEditing={() => passwordRef.current.focus()}
+                />
+                <Rb_Input
+                    ref={passwordRef}
+                    label="비밀번호"
+                    value={password}
+                    onChangeText={text => setPassword(text)}
+                    secureTextEntry={true}
+                    returnKeyType="done" />
+
+                <View style={{ padding: 10 }}>
+                    <Text style={{ fontSize: 17, color: '#eb586f' }}>{errorMsg}</Text>
+                </View>
+
+                <View>
+                    <Pressable style={{ backgroundColor: colors.button_color, borderRadius: 15, width: 250, marginBottom: 10 }}
+                        onPress={() => SignIn(id, password, navigation)}>
+                        <Text style={{ fontSize: 20, textAlign: 'center' }}>로그인</Text>
+                    </Pressable>
+                    <Pressable style={{ backgroundColor: colors.button_color, borderRadius: 15, width: 250 }}
+                        onPress={() => navigation.navigate('signup')}>
+                        <Text style={{ fontSize: 20, textAlign: 'center' }}>회원가입</Text>
+                    </Pressable>
+                </View>
+            </Container>
+        </TouchableWithoutFeedback>
     )
 }
 

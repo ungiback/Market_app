@@ -62,7 +62,7 @@ const OrderPage = ({ navigation }) => {
         function todeFormat(today) {
             const YYYY = today.getFullYear()
             const MM = (today.getMonth() + 1) < 10 ? '0' + (today.getMonth() + 1) : (today.getMonth() + 1)
-            const DD = today.getDate() < 10 ? '0' + today.getDate() : (today.getDate()-1)
+            const DD = today.getDate() < 10 ? '0' + today.getDate() : today.getDate()
 
             return YYYY + "" + MM + "" + DD
         }
@@ -72,14 +72,14 @@ const OrderPage = ({ navigation }) => {
             try {
                 const orderRef = Store.doc(Store.getFirestore(), "Order", User.uid)
                 const get_data = await Store.getDoc(Store.doc(Store.getFirestore(), "Order", User.uid))
-                const order_histoy = get_data.data().order_histoy
+                const order_history = get_data.data().order_history
 
                 const dataSet = {
-                    ...order_histoy,
+                    ...order_history,
                     [order_DATE]: Object.values(state)
                 }
                 await Store.updateDoc(orderRef, {
-                    order_histoy: dataSet
+                    order_history: dataSet
                 }).then(() => {
                     dispatch({ type: 'success' })
                     navigation.goBack()

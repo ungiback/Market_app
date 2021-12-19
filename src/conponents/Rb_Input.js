@@ -1,5 +1,5 @@
-import React from 'react'
-import { useWindowDimensions } from 'react-native';
+import React, { forwardRef } from 'react'
+import { useWindowDimensions, TextInput } from 'react-native';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -15,21 +15,24 @@ const Input = styled.TextInput`
     padding-left:7px;
 `
 
-const Rb_Input = (props) => {
-    const { label, value, onChangeText, secureTextEntry, returnKeyType } = props
+const Rb_Input = forwardRef((props, ref) => {
+    const { label, value, onChangeText, secureTextEntry, returnKeyType, onSubmitEditing } = props
     const { width } = useWindowDimensions()
     return (
         <Container width={width - 20}>
             <Input
+                ref={ref}
                 value={value}
                 placeholder={label}
                 secureTextEntry={secureTextEntry}
                 onChangeText={onChangeText}
                 returnKeyType={returnKeyType}
+                onSubmitEditing={onSubmitEditing}
             />
         </Container>
     )
 }
+)
 
 Rb_Input.propTypes = {
     label: PropTypes.string,
