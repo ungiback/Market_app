@@ -9,7 +9,8 @@ import { useDispatchContxt } from "../conponents/BasketProvider";
 import * as Random from 'expo-random';
 
 
-LogBox.ignoreLogs(['Setting a timer']);  // 음... web전용으로 firebase랑 연동을 하는데 expo는 web전용 firebase의 느린 방식을 못 기다린다는 것이라고 해서 'Setting a timer...'라고 뜨는 경고를 무시를 설정을 했더니 됐다. 
+// LogBox.ignoreLogs(['Setting a timer']);  // 음... web전용으로 firebase랑 연동을 하는데 expo는 web전용 firebase의 느린 방식을 못 기다린다는 것이라고 해서 'Setting a timer...'라고 뜨는 경고를 무시를 설정을 했더니 됐다. 
+
 
 const UpContainer = styled.View`
     flex:1;

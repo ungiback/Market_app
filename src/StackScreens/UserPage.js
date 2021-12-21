@@ -4,19 +4,21 @@ import { View, Text, Pressable } from "react-native";
 import { Auth } from "../firebaseConfig";
 
 const UserPage = ({ navigation }) => {
-    const [logged, setLogged] = useState()
+    const [logged, setLogged] = useState(false)
     const { width } = useWindowDimensions()
 
     const auth = Auth.getAuth()
     useEffect(() => {
-        Auth.onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setLogged(true)
-                // console.log("왜 여러번 출력하지? 여기 다시 생각해보기")
-            }
+        const auth_ = Auth.onAuthStateChanged(auth, (user) => {
+            user ? setLogged(true) : ""
+            // console.log("왜 여러번 출력하지? 여기 다시 생각해보기")
         })
-    }, [])
-    
+        return () => {
+            setLogged(false)
+            auth_()
+        }
+    }, []) //Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function. 해결이 안됨
+
     const LogOut_Alert = useCallback(() => {
         Alert.alert(
             "Sign-Out",

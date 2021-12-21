@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Text, Pressable, useWindowDimensions, Alert, ScrollView } from "react-native";
 import OrderListItem from "../conponents/OrderListItem";
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -57,7 +57,7 @@ const OrderPage = ({ navigation }) => {
         }, [])
     );
 
-    const OrderBtn = useCallback(async (navigation, logged) => {
+    const OrderBtn = async (navigation, logged) => {
         const today = new Date()
         function todeFormat(today) {
             const YYYY = today.getFullYear()
@@ -72,10 +72,10 @@ const OrderPage = ({ navigation }) => {
             try {
                 const orderRef = Store.doc(Store.getFirestore(), "Order", User.uid)
                 const get_data = await Store.getDoc(Store.doc(Store.getFirestore(), "Order", User.uid))
-                const order_history = get_data.data().order_history
+                const get_history = get_data.data().order_history
 
                 const dataSet = {
-                    ...order_history,
+                    ...get_history,
                     [order_DATE]: Object.values(state)
                 }
                 await Store.updateDoc(orderRef, {
@@ -93,9 +93,9 @@ const OrderPage = ({ navigation }) => {
                 //로그인 화면으로 이동 하기 할것 
             ])
         }
-    }, [])
+    }
 
-    const onDeleteBtn = (id) => {
+    function onDeleteBtn(id) {
         dispatch({ type: 'delete', put_num: id })
     }
     return (
@@ -108,7 +108,7 @@ const OrderPage = ({ navigation }) => {
             </Title>
             <Middle>
                 <ScrollView>
-                    {state.map((a, idx) => <OrderListItem key={idx} list={a} num={idx}
+                    {state.map((item, idx) => <OrderListItem key={idx} item={item} num={idx}
                         onDeleteBtn={(id) => onDeleteBtn(id)}
                     />)}
                 </ScrollView>

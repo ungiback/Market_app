@@ -13,7 +13,7 @@ const Container = styled.View`
     padding:10px;
     border-radius:10px;
 `;
-const OrderListItem = ({ num, list, onDeleteBtn }) => {
+const OrderListItem = ({ num, item, onDeleteBtn }) => {
     const { width } = useWindowDimensions()
     // const [cnt, setCnt] = useState()
     // useEffect(() => {
@@ -31,15 +31,15 @@ const OrderListItem = ({ num, list, onDeleteBtn }) => {
 
             <View style={{ flex: 2, justifyContent: 'center' }}>
                 <Text style={{ fontSize: 15 }}>
-                    {num + 1}.{list.name}
+                    {num + 1}.{item.name}
                 </Text>
                 <Text>
-                    개당 {list.price}원
+                    개당 {item.price}원
                 </Text>
             </View>
             <View style={{ justifyContent: 'center', alignItems: 'center', marginRight: 40 }}>
                 <Text>
-                    {list.count * list.price} 원
+                    {item.count * item.price} 원
                 </Text>
             </View>
             <View style={{ flex: 1, flexDirection: 'row', borderWidth: 1, borderRadius: 10, padding: 5, justifyContent: 'center', marginRight: 13, alignItems: 'center' }}>
@@ -49,11 +49,11 @@ const OrderListItem = ({ num, list, onDeleteBtn }) => {
                 </Text>
                 <AntDesign name="minus" size={24} color="black" onPress={() => PlmaBtn('', cnt)} /> */}
                 <Text>
-                    {list.count} 개
+                    {item.count} 개
                 </Text>
             </View>
             <AntDesign name="delete" size={24} color="black"
-                onPress={() => onDeleteBtn(list.put_num)}
+                onPress={() => onDeleteBtn(item.put_num)}
             />
         </Container>
     )
